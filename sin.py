@@ -3,8 +3,6 @@ import displayio
 from adafruit_matrixportal.matrix import Matrix
 import math
 import os
-import time
-import random
 from jediah.utils import hsv_to_hex
 
 ani_dir="/ani"
@@ -29,7 +27,7 @@ num_colors = 64
 palette = displayio.Palette(num_colors+1)
 palette[0] = 0
 for i in range(1, 65):
-    palette[i] = hsv_to_hex((int(255 * (i-1)/64), 255, 255))
+    palette[i] = hsv_to_hex((int(360 * (i-1)/64), 1, 1))
 
 count = 0
 theta = 0.02

@@ -6,62 +6,18 @@ def hsv_to_hex(hsv):
 def rgb_to_hex(rgb):
     r, g, b = rgb
     rgb = 0x010000 * r + 0x000100 * g + 0x000001 * b
-    return rgb
+    return int(rgb)
 
-def hsv_to_rgb(HSV):
-    ''' Converts an integer HSV tuple (value range from 0 to 255) to an RGB tuple '''
-
-    # Unpack the HSV tuple for readability
-    H, S, V = HSV
-
-    # Check if the color is Grayscale
-    if S == 0:
-        R = V
-        G = V
-        B = V
-        return (R, G, B)
-
-    # Make hue 0-5
-    region = H // 43;
-
-    # Find remainder part, make it from 0-255
-    remainder = (H - (region * 43)) * 6; 
-
-    # Calculate temp vars, doing integer multiplication
-    P = (V * (255 - S)) >> 8;
-    Q = (V * (255 - ((S * remainder) >> 8))) >> 8;
-    T = (V * (255 - ((S * (255 - remainder)) >> 8))) >> 8;
-
-
-    # Assign temp vars based on color cone region
-    if region == 0:
-        R = V
-        G = T
-        B = P
-
-    elif region == 1:
-        R = Q; 
-        G = V; 
-        B = P;
-
-    elif region == 2:
-        R = P; 
-        G = V; 
-        B = T;
-
-    elif region == 3:
-        R = P; 
-        G = Q; 
-        B = V;
-
-    elif region == 4:
-        R = T; 
-        G = P; 
-        B = V;
-
-    else: 
-        R = V; 
-        G = P; 
-        B = Q;
-
-    return R, G, B
+def hsv_to_rgb(hsv):
+    h, s, v = hsv
+    h = h / 360.0
+    # https://stackoverflow.com/questions/24852345/hsv-to-rgb-color-conversion
+    if s == 0.0: v*=255; return (v, v, v)
+    i = int(h*6.) # XXX assume int() truncates!
+    f = (h*6.)-i; p,q,t = int(255*(v*(1.-s))), int(255*(v*(1.-s*f))), int(255*(v*(1.-s*(1.-f)))); v*=255; i%=6
+    if i == 0: return (v, t, p)
+    if i == 1: return (q, v, p)
+    if i == 2: return (p, v, t)
+    if i == 3: return (p, q, v)
+    if i == 4: return (t, p, v)
+    if i == 5: return (v, p, q)
