@@ -1,12 +1,8 @@
 # type: ignore
 import displayio
 from adafruit_matrixportal.matrix import Matrix
-import os
 import random
 from jediah.utils import hsv_to_hex
-
-ani_dir="/ani"
-ani_files = os.listdir( ani_dir )
 
 # initialize display
 matrix = Matrix(bit_depth=4)
