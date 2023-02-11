@@ -1,13 +1,7 @@
 # type: ignore
 import displayio
 from adafruit_matrixportal.matrix import Matrix
-import math
-import os
-import time
 import random
-
-ani_dir="/ani"
-ani_files = os.listdir( ani_dir )
 
 # initialize display
 matrix = Matrix(bit_depth=4)
